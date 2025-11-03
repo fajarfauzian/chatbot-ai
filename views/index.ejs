@@ -16,8 +16,8 @@
                         <h2 class="text-center mb-0">🤖 AI Chatbot</h2>
                     </div>
                     <div class="card-body">
-                  
-                        <div class="chat-container mb-3" style="height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
+                    
+                        <div id="chatContainer" class="chat-container mb-3" style="height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 15px; border-radius: 8px; background-color: #f8f9fa;">
                             <% if (chatHistory.length === 0) { %>
                                 <div class="text-center text-muted mt-5">
                                     <p>Mulai percakapan dengan AI!</p>
@@ -28,7 +28,7 @@
                                         <div class="d-flex <%= message.role === 'user' ? 'justify-content-end' : 'justify-content-start' %>">
                                             <div class="message-bubble <%= message.role === 'user' ? 'bg-primary text-white' : 'bg-light' %> p-3 rounded" style="max-width: 70%;">
                                                 <strong><%= message.role === 'user' ? 'Anda' : 'AI' %>:</strong>
-                                                <div class="mt-1"><%= message.content %></div>
+                                                <div class="mt-1" style="white-space: pre-wrap;"><%= message.content %></div>
                                             </div>
                                         </div>
                                     </div>
@@ -36,21 +36,65 @@
                             <% } %>
                         </div>
 
-                        <form action="/chat" method="POST" class="mb-2">
+                        <form action="/chat" method="POST" class="mb-2" id="chatForm">
                             <div class="input-group">
-                                <input type="text" name="message" class="form-control" placeholder="Ketik pesan Anda..." required>
-                                <button type="submit" class="btn btn-primary">Kirim</button>
+                                <input 
+                                    type="text" 
+                                    name="message" 
+                                    id="messageInput" 
+                                    class="form-control" 
+                                    placeholder="Ketik pesan Anda..." 
+                                    required 
+                                    autocomplete="off"
+                                >
+                                <button type="submit" class="btn btn-primary" id="sendBtn">
+                                    Kirim
+                                </button>
                             </div>
                         </form>
 
                         <form action="/clear" method="POST" class="text-center">
-                            <button type="submit" class="btn btn-outline-danger btn-sm">Hapus Riwayat Chat</button>
+                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                Hapus Riwayat Chat
+                            </button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        console.log('Page loaded');
+        
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded');
+            const chatContainer = document.getElementById('chatContainer');
+            if (chatContainer) {
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                console.log('Scrolled to bottom');
+            }
+        });
+
+        const chatForm = document.getElementById('chatForm');
+        const sendBtn = document.getElementById('sendBtn');
+        const messageInput = document.getElementById('messageInput');
+
+        chatForm.addEventListener('submit', function(e) {
+            console.log('Form submitted');
+            console.log('Message:', messageInput.value);
+            
+            if (messageInput.value.trim() === '') {
+                e.preventDefault();
+                alert('Silakan ketik pesan terlebih dahulu!');
+                return;
+            }
+            
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Mengirim...';
+            messageInput.disabled = true;
+        });
+    </script>
 </body>
 </html>

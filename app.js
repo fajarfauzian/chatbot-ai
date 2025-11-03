@@ -13,13 +13,20 @@ app.set('views', path.join(__dirname, 'views'));
 // Setup static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Body parser middleware
+// Body parser middleware - PENTING INI HARUS ADA!
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Routes
 app.use('/', chatRoute);
 
+// Error handler
+app.use((err, req, res, next) => {
+    console.error('Error:', err);
+    res.status(500).send('Something broke!');
+});
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Open your browser and visit: http://localhost:${PORT}`);
 });
