@@ -1,42 +1,74 @@
 body {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-color: #ffffff;
     min-height: 100vh;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .chat-container {
     background-color: #f8f9fa;
+    max-height: 500px;
+    overflow-y: auto;
 }
 
 .message-bubble {
     word-wrap: break-word;
+    padding: 12px 16px;
+    border-radius: 18px;
+    max-width: 80%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .user-message .message-bubble {
-    border-bottom-right-radius: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-bottom-right-radius: 4px;
+    margin-left: auto;
 }
 
 .ai-message .message-bubble {
-    border-bottom-left-radius: 0;
+    background-color: #ffffff;
+    border: 1px solid #e9ecef;
+    border-bottom-left-radius: 4px;
+    color: #333;
 }
 
 .card {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border: none;
-    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    background: white;
 }
 
 .card-header {
-    border-radius: 15px 15px 0 0 !important;
+    border-radius: 12px 12px 0 0 !important;
+    background: white;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 20px;
 }
 
 .btn-primary {
-    background: linear-gradient(45deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 500;
 }
 
 .btn-primary:hover {
-    background: linear-gradient(45deg, #5a6fd8, #6a4190);
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.form-control {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 12px 16px;
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
 }
 
 /* Custom scrollbar */
@@ -45,15 +77,52 @@ body {
 }
 
 .chat-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #f8f9fa;
     border-radius: 3px;
 }
 
 .chat-container::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
+    background: #d1d5db;
     border-radius: 3px;
 }
 
 .chat-container::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
+    background: #9ca3af;
+}
+
+/* Modern shadow effects */
+.message-bubble {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.message-bubble:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Loading animation */
+.typing-indicator {
+    display: inline-block;
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border-radius: 18px;
+    border-bottom-left-radius: 4px;
+}
+
+.typing-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #9ca3af;
+    margin: 0 2px;
+    animation: typing 1.4s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typing {
+    0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+    40% { transform: scale(1); opacity: 1; }
 }
