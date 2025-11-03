@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="text-center mb-0">🤖 AI Chatbot</h2>
+                    </div>
+                    <div class="card-body">
+                  
+                        <div class="chat-container mb-3" style="height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
+                            <% if (chatHistory.length === 0) { %>
+                                <div class="text-center text-muted mt-5">
+                                    <p>Mulai percakapan dengan AI!</p>
+                                </div>
+                            <% } else { %>
+                                <% chatHistory.forEach(function(message) { %>
+                                    <div class="message <%= message.role === 'user' ? 'user-message' : 'ai-message' %> mb-3">
+                                        <div class="d-flex <%= message.role === 'user' ? 'justify-content-end' : 'justify-content-start' %>">
+                                            <div class="message-bubble <%= message.role === 'user' ? 'bg-primary text-white' : 'bg-light' %> p-3 rounded" style="max-width: 70%;">
+                                                <strong><%= message.role === 'user' ? 'Anda' : 'AI' %>:</strong>
+                                                <div class="mt-1"><%= message.content %></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            <% } %>
+                        </div>
+
+                        <form action="/chat" method="POST" class="mb-2">
+                            <div class="input-group">
+                                <input type="text" name="message" class="form-control" placeholder="Ketik pesan Anda..." required>
+                                <button type="submit" class="btn btn-primary">Kirim</button>
+                            </div>
+                        </form>
+
+                        <form action="/clear" method="POST" class="text-center">
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Hapus Riwayat Chat</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

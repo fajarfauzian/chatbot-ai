@@ -1,0 +1,59 @@
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.chat-container {
+    background-color: #f8f9fa;
+}
+
+.message-bubble {
+    word-wrap: break-word;
+}
+
+.user-message .message-bubble {
+    border-bottom-right-radius: 0;
+}
+
+.ai-message .message-bubble {
+    border-bottom-left-radius: 0;
+}
+
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 15px;
+}
+
+.card-header {
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #5a6fd8, #6a4190);
+}
+
+/* Custom scrollbar */
+.chat-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.chat-container::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
