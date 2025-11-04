@@ -1,6 +1,6 @@
 # AI Chatbot Project
 
-Project web chatbot sederhana menggunakan Node.js, Express.js, dan EJS yang dapat berintegrasi dengan berbagai API AI seperti OpenAI, DeepSeek, Gemini, atau Ollama.
+Project web chatbot sederhana menggunakan Node.js, Express.js, dan EJS yang dapat berintegrasi dengan API AI OpenAI.
 
 ## Fitur
 
@@ -8,7 +8,6 @@ Project web chatbot sederhana menggunakan Node.js, Express.js, dan EJS yang dapa
 - Riwayat percakapan sementara
 - Integrasi dengan API AI
 - Desain modern dengan Bootstrap
-- Mudah dikustomisasi
 
 ## Persyaratan
 
@@ -21,4 +20,5 @@ Project web chatbot sederhana menggunakan Node.js, Express.js, dan EJS yang dapa
 1. Clone atau download project ini
 2. Masuk ke folder project:
    ```bash
+
    cd chatbot-ai
