@@ -1,123 +1,266 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI Chatbot</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/style.css">
-</head>
-<body>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
     <div class="container mt-4">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <h2 class="text-center mb-0">🤖 AI Chatbot</h2>
-                    </div>
-                    <div class="card-body">
-                    
-                        <div id="chatContainer" class="chat-container mb-3" style="height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 15px; border-radius: 8px; background-color: #f8f9fa;">
-                            <% if (chatHistory.length === 0) { %>
-                                <div class="text-center text-muted mt-5">
-                                    <p>Mulai percakapan dengan AI!</p>
-                                    <small>Ketik pesan di bawah dan klik Kirim</small>
-                                </div>
-                            <% } else { %>
-                                <% chatHistory.forEach(function(message) { %>
-                                    <div class="message <%= message.role === 'user' ? 'user-message' : 'ai-message' %> mb-3">
-                                        <div class="d-flex <%= message.role === 'user' ? 'justify-content-end' : 'justify-content-start' %>">
-                                            <div class="message-bubble <%= message.role === 'user' ? 'bg-primary text-white' : 'bg-light' %> p-3 rounded" style="max-width: 70%;">
-                                                <strong><%= message.role === 'user' ? 'Anda' : 'AI' %>:</strong>
-                                                <div class="mt-1" style="white-space: pre-wrap;"><%= message.content %></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <% }); %>
-                            <% } %>
-                        </div>
-
-                        <form id="chatForm" action="/chat" method="POST">
-                            <div class="input-group mb-2">
-                                <input 
-                                    type="text" 
-                                    name="message" 
-                                    id="messageInput" 
-                                    class="form-control" 
-                                    placeholder="Ketik pesan Anda..." 
-                                    autocomplete="off"
-                                >
-                                <button type="submit" class="btn btn-primary" id="sendBtn">
-                                    Kirim
-                                </button>
-                            </div>
-                        </form>
-
-                        <div class="text-center">
-                            <form action="/clear" method="POST" style="display: inline;">
-                                <button type="submit" class="btn btn-outline-danger btn-sm">
-                                    🗑️ Hapus Riwayat
-                                </button>
-                            </form>
-                        </div>
-
-                        <div class="mt-3 p-2 bg-light rounded" style="font-size: 0.8rem;">
-                            <strong>Debug:</strong>
-                            <div>Total pesan: <%= chatHistory.length %></div>
-                            <div id="debugInfo"></div>
-                        </div>
-                    </div>
-                </div>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card">
+            <div
+              class="card-header text-white"
+              style="background: linear-gradient(to right, #11224e, #f87b1b)"
+            >
+              <h2 class="text-center mb-0">🤖 AI Chatbot</h2>
             </div>
+
+            <div class="card-body">
+              <div
+                id="chatContainer"
+                class="chat-container mb-3"
+                style="
+                  height: 400px;
+                  overflow-y: auto;
+                  border: 1px solid #ddd;
+                  padding: 15px;
+                  border-radius: 8px;
+                  background-color: #f8f9fa;
+                "
+              >
+                <div id="messages">
+                  <% if (chatHistory.length === 0) { %>
+                  <div class="text-center text-muted mt-5" id="emptyState">
+                    <p>Mulai percakapan dengan AI!</p>
+                    <small>Ketik pesan di bawah dan klik Kirim</small>
+                  </div>
+                  <% } else { %> <% chatHistory.forEach(function(message) { %>
+                  <div
+                    class="message <%= message.role === 'user' ? 'user-message' : 'ai-message' %> mb-3"
+                  >
+                    <div
+                      class="d-flex <%= message.role === 'user' ? 'justify-content-end' : 'justify-content-start' %>"
+                    >
+                      <div
+                        class="message-bubble <%= message.role === 'user' ? 'bg-primary text-white' : 'bg-light' %> p-3 rounded"
+                        style="max-width: 70%"
+                      >
+                        <strong
+                          ><%= message.role === 'user' ? 'Anda' : 'AI'
+                          %>:</strong
+                        >
+                        <div class="mt-1" style="white-space: pre-wrap">
+                          <%= message.content %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <% }); %> <% } %>
+                </div>
+              </div>
+
+              <form id="chatForm">
+                <div class="input-group mb-2">
+                  <input
+                    type="text"
+                    name="message"
+                    id="messageInput"
+                    class="form-control"
+                    placeholder="Ketik pesan Anda..."
+                    autocomplete="off"
+                    required
+                  />
+                  <button type="submit" class="btn btn-primary" id="sendBtn">
+                    Kirim
+                  </button>
+                </div>
+              </form>
+
+              <div class="text-center">
+                <button id="clearBtn" class="btn btn-outline-danger btn-sm">
+                  🗑️ Hapus Riwayat
+                </button>
+              </div>
+
+              <div class="mt-3 p-2 bg-light rounded" style="font-size: 0.8rem">
+                <strong>Debug:</strong>
+                <div>
+                  Total pesan:
+                  <span id="messageCount"><%= chatHistory.length %></span>
+                </div>
+                <div id="statusInfo" class="text-muted">Siap</div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        console.log('=== PAGE LOADED ===');
-        
-        window.addEventListener('DOMContentLoaded', function() {
-            const chatContainer = document.getElementById('chatContainer');
-            if (chatContainer) {
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }
-        });
+      const chatContainer = document.getElementById("chatContainer");
+      const messagesDiv = document.getElementById("messages");
+      const chatForm = document.getElementById("chatForm");
+      const messageInput = document.getElementById("messageInput");
+      const sendBtn = document.getElementById("sendBtn");
+      const clearBtn = document.getElementById("clearBtn");
+      const messageCount = document.getElementById("messageCount");
+      const statusInfo = document.getElementById("statusInfo");
 
-        const form = document.getElementById('chatForm');
-        const input = document.getElementById('messageInput');
-        const sendBtn = document.getElementById('sendBtn');
-        const debugInfo = document.getElementById('debugInfo');
+      function scrollToBottom() {
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }
 
-        console.log('Form:', form);
-        console.log('Form action:', form?.action);
-        console.log('Form method:', form?.method);
-        console.log('Input:', input);
-        console.log('Input name:', input?.name);
+      function addMessage(role, content) {
+        const emptyState = document.getElementById("emptyState");
+        if (emptyState) {
+          emptyState.remove();
+        }
 
-        form.addEventListener('submit', function(e) {
-            const message = input.value.trim();
-            
-            console.log('=== FORM SUBMIT ===');
-            console.log('Message:', message);
-            console.log('Form action:', form.action);
-            console.log('Form method:', form.method);
-            console.log('Input name:', input.name);
-            console.log('Input value:', input.value);
-            
-            debugInfo.innerHTML = 'Submitting: ' + message;
-            
-            if (message === '') {
-                e.preventDefault();
-                alert('Silakan ketik pesan!');
-                return false;
-            }
-            
-            sendBtn.disabled = true;
-            sendBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Mengirim...';
-            input.disabled = true;
-            
-            debugInfo.innerHTML = 'Mengirim ke server...';
-        });
+        const messageDiv = document.createElement("div");
+        messageDiv.className = `message ${
+          role === "user" ? "user-message" : "ai-message"
+        } mb-3`;
+
+        messageDiv.innerHTML = `
+                <div class="d-flex ${
+                  role === "user"
+                    ? "justify-content-end"
+                    : "justify-content-start"
+                }">
+                    <div class="message-bubble ${
+                      role === "user" ? "bg-primary text-white" : "bg-light"
+                    } p-3 rounded" style="max-width: 70%;">
+                        <strong>${role === "user" ? "Anda" : "AI"}:</strong>
+                        <div class="mt-1" style="white-space: pre-wrap;">${content}</div>
+                    </div>
+                </div>
+            `;
+
+        messagesDiv.appendChild(messageDiv);
+        scrollToBottom();
+
+        const currentCount = parseInt(messageCount.textContent);
+        messageCount.textContent = currentCount + 1;
+      }
+
+      function showTypingIndicator() {
+        const typingDiv = document.createElement("div");
+        typingDiv.id = "typingIndicator";
+        typingDiv.className = "message ai-message mb-3";
+        typingDiv.innerHTML = `
+                <div class="d-flex justify-content-start">
+                    <div class="typing-indicator">
+                        <span class="typing-dot"></span>
+                        <span class="typing-dot"></span>
+                        <span class="typing-dot"></span>
+                    </div>
+                </div>
+            `;
+        messagesDiv.appendChild(typingDiv);
+        scrollToBottom();
+      }
+
+      function removeTypingIndicator() {
+        const typingDiv = document.getElementById("typingIndicator");
+        if (typingDiv) {
+          typingDiv.remove();
+        }
+      }
+
+      chatForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const message = messageInput.value.trim();
+        if (!message) return;
+
+        sendBtn.disabled = true;
+        messageInput.disabled = true;
+        sendBtn.innerHTML =
+          '<span class="spinner-border spinner-border-sm"></span>';
+        statusInfo.textContent = "Mengirim...";
+
+        addMessage("user", message);
+        messageInput.value = "";
+
+        showTypingIndicator();
+        statusInfo.textContent = "AI sedang mengetik...";
+
+        try {
+          const response = await fetch("/api/chat", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ message: message }),
+          });
+
+          const data = await response.json();
+
+          removeTypingIndicator();
+
+          if (data.success) {
+            addMessage("assistant", data.response);
+            statusInfo.textContent = "Siap";
+          } else {
+            addMessage("assistant", "❌ Error: " + data.error);
+            statusInfo.textContent = "Error";
+          }
+        } catch (error) {
+          removeTypingIndicator();
+          addMessage("assistant", "❌ Terjadi kesalahan: " + error.message);
+          statusInfo.textContent = "Error";
+          console.error("Error:", error);
+        } finally {
+          sendBtn.disabled = false;
+          messageInput.disabled = false;
+          sendBtn.innerHTML = "Kirim";
+          messageInput.focus();
+        }
+      });
+
+      clearBtn.addEventListener("click", async () => {
+        if (!confirm("Hapus semua riwayat chat?")) return;
+
+        statusInfo.textContent = "Menghapus...";
+
+        try {
+          const response = await fetch("/api/clear", {
+            method: "POST",
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            messagesDiv.innerHTML = `
+                        <div class="text-center text-muted mt-5" id="emptyState">
+                            <p>Mulai percakapan dengan AI!</p>
+                            <small>Ketik pesan di bawah dan klik Kirim</small>
+                        </div>
+                    `;
+            messageCount.textContent = "0";
+            statusInfo.textContent = "Riwayat dihapus";
+
+            setTimeout(() => {
+              statusInfo.textContent = "Siap";
+            }, 2000);
+          }
+        } catch (error) {
+          statusInfo.textContent = "Error menghapus";
+          console.error("Error:", error);
+        }
+      });
+
+      window.addEventListener("DOMContentLoaded", scrollToBottom);
+
+      messageInput.focus();
     </script>
-</body>
+  </body>
 </html>

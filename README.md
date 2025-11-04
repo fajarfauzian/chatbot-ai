@@ -14,7 +14,7 @@ Project web chatbot sederhana menggunakan Node.js, Express.js, dan EJS yang dapa
 
 - Node.js (versi 14 atau lebih tinggi)
 - npm
-- API key dari salah satu penyedia AI (OpenAI, DeepSeek, dll)
+- API key dari OpenAI
 
 ## Instalasi
 
